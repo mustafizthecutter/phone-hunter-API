@@ -1,20 +1,27 @@
-const loadPhones = async (searchBtnField) => {
+const loadPhones = async (searchBtnField, isShowAll) => {
     const res = await fetch(`https://openapi.programming-hero.com/api/phones?search=${searchBtnField}`)
     const data = await res.json();
     const phones = data.data
-    showPhones(phones);
+    showPhones(phones, isShowAll);
 }
-const showPhones = (phones) => {
+const showPhones = (phones, isShowAll) => {
+    console.log(phones)
+    const phoneContainer = document.getElementById('phone-container');
+    phoneContainer.textContent = '';
+
+
     const showMoreBtn = document.getElementById('show-more-button');
-    if (phones.length > 12) {
+
+    if (phones.length > 12 && !isShowAll) {
         showMoreBtn.classList.remove('hidden')
     }
     else {
         showMoreBtn.classList.add('hidden')
     }
-    phones = phones.slice(0, 12);
-    const phoneContainer = document.getElementById('phone-container');
-    phoneContainer.textContent = '';
+    console.log('is show all', isShowAll)
+    if (!isShowAll) {
+        phones = phones.slice(0, 12);
+    }
     phones.forEach(phone => {
         const phoneDiv = document.createElement('div');
         phoneDiv.classList = 'card p-4 bg-gray-100 shadow-xl';
@@ -28,24 +35,27 @@ const showPhones = (phones) => {
           </div>
            </div>`;
         phoneContainer.appendChild(phoneDiv);
+
     });
     toggleLoadingSpinner(false);
 
 }
-const searchHandle = () => {
+
+const searchHandle = (isShowAll) => {
     toggleLoadingSpinner(true)
     const searchBtn = document.getElementById('search-btn');
     const searchBtnField = searchBtn.value;
-    loadPhones(searchBtnField);
-    searchBtn.value = '';
+    loadPhones(searchBtnField, isShowAll);
+
+
 }
-const searchHandle2 = () => {
-    toggleLoadingSpinner(true)
-    const searchBtn = document.getElementById('search-btn2');
-    const searchBtnField = searchBtn.value;
-    loadPhones(searchBtnField);
-    searchBtn.value = '';
-}
+// const searchHandle2 = () => {
+//     toggleLoadingSpinner(true)
+//     const searchBtn = document.getElementById('search-btn2');
+//     const searchBtnField = searchBtn.value;
+//     loadPhones(searchBtnField);
+//     searchBtn.value = '';
+// }
 const toggleLoadingSpinner = (isLoading) => {
     const loadingSpinner = document.getElementById('loading-spinner');
     if (isLoading) {
@@ -55,3 +65,8 @@ const toggleLoadingSpinner = (isLoading) => {
         loadingSpinner.classList.add('hidden')
     }
 }
+const showMoreDisplay = () => {
+    searchHandle(true);
+}
+
+
