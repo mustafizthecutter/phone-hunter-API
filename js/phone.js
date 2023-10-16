@@ -23,6 +23,7 @@ const showPhones = (phones, isShowAll) => {
         phones = phones.slice(0, 12);
     }
     phones.forEach(phone => {
+        console.log(phone);
         const phoneDiv = document.createElement('div');
         phoneDiv.classList = 'card p-4 bg-gray-100 shadow-xl';
         phoneDiv.innerHTML = `
@@ -30,8 +31,8 @@ const showPhones = (phones, isShowAll) => {
           <div class="card-body">
           <h2 class="card-title">${phone.phone_name}</h2>
           <p>If a dog chews shoes whose shoes does he choose?</p>
-           <div class="card-actions justify-end">
-          <button class="btn btn-primary">Buy Now</button>
+           <div class="card-actions justify-center">
+          <button onclick="showDetails('${phone.slug}')" class="btn btn-primary">Show Details</button>
           </div>
            </div>`;
         phoneContainer.appendChild(phoneDiv);
@@ -39,6 +40,9 @@ const showPhones = (phones, isShowAll) => {
     });
     toggleLoadingSpinner(false);
 
+}
+const showDetails = (id) => {
+    // console.log('clicked', id)
 }
 
 const searchHandle = (isShowAll) => {
