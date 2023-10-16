@@ -5,7 +5,7 @@ const loadPhones = async (searchBtnField, isShowAll) => {
     showPhones(phones, isShowAll);
 }
 const showPhones = (phones, isShowAll) => {
-    console.log(phones)
+
     const phoneContainer = document.getElementById('phone-container');
     phoneContainer.textContent = '';
 
@@ -23,7 +23,7 @@ const showPhones = (phones, isShowAll) => {
         phones = phones.slice(0, 12);
     }
     phones.forEach(phone => {
-        console.log(phone);
+
         const phoneDiv = document.createElement('div');
         phoneDiv.classList = 'card p-4 bg-gray-100 shadow-xl';
         phoneDiv.innerHTML = `
@@ -41,8 +41,31 @@ const showPhones = (phones, isShowAll) => {
     toggleLoadingSpinner(false);
 
 }
-const showDetails = (id) => {
+const showDetails = async (id) => {
     // console.log('clicked', id)
+    const res = await fetch(`https://openapi.programming-hero.com/api/phone/${id}`);
+    const data = await res.json();
+    const phone = data.data
+    // console.log(phone);
+    showPhoneDetails(phone);
+}
+const showPhoneDetails = (phone) => {
+    console.log(phone);
+    const phoneDetailsInModal = document.getElementById('phone-details-modal');
+    phoneDetailsInModal.innerHTML = `
+    <img src="${phone.image}" alt="">
+    <h2 class="font-bold text-lg">${phone.name}</h2>
+    <p class="font-medium text-sm">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+    <h5"><span class="font-medium text-sm">Storage:</span >${phone.mainFeatures.storage}</h5>
+    <h5"><span class="font-medium text-sm">Display Size:</span >${phone.mainFeatures.displaySize}</h5>
+    <h5"><span class="font-medium text-sm">Chipset :</span >${phone.mainFeatures.chipSet}</h5>
+    <h5"><span class="font-medium text-sm">Memory :</span >${phone.mainFeatures.memory}</h5>
+    <h5"><span class="font-medium text-sm">Slug :</span >${phone.slug}</h5>
+    <h5"><span class="font-medium text-sm">Release data :</span >${phone.releaseDate}</h5>
+    <h5"><span class="font-medium text-sm">Brand :</span >${phone.brand}</h5>
+    <h5"><span class="font-medium text-sm">GPS :</span >${phone.others.GPS}</h5>
+    `
+    show_modal_details.showModal();
 }
 
 const searchHandle = (isShowAll) => {
