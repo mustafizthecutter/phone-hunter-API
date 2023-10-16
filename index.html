@@ -13,8 +13,28 @@
 <body>
     <header>
         <h3 class="text-6xl">Phone Hunter</h3>
-        <script src="js/phone.js"></script>
+
     </header>
+    <main class="container mx-auto mt-8">
+        <!-- search field -->
+        <section class="bg-gray-100 p-4 m-4">
+            <input id="search-btn" type="text" placeholder="search here...." class="input w-full max-w-xs " />
+            <button onclick="searchHandle()" class="btn btn-accent">Search</button>
+
+        </section>
+
+        <!-- search result -->
+        <section>
+            <div id="phone-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+            </div>
+        </section>
+    </main>
+
+    <body>
+
+    </body>
+    <script src="js/phone.js"></script>
 </body>
 
 </html>
