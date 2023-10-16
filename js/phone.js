@@ -7,6 +7,14 @@ const loadPhones = async (searchBtnField) => {
 }
 const showPhones = (phones) => {
     // console.log(phones)
+    const showMoreBtn = document.getElementById('show-more-button');
+    if (phones.length > 12) {
+        showMoreBtn.classList.remove('hidden')
+    }
+    else {
+        showMoreBtn.classList.add('hidden')
+    }
+    phones = phones.slice(0, 12);
     const phoneContainer = document.getElementById('phone-container');
     phoneContainer.textContent = '';
     phones.forEach(phone => {
@@ -32,6 +40,12 @@ const searchHandle = () => {
     const searchBtn = document.getElementById('search-btn');
     const searchBtnField = searchBtn.value;
     // console.log(searchBtnField);
+    loadPhones(searchBtnField);
+    searchBtn.value = '';
+}
+const searchHandle2 = () => {
+    const searchBtn = document.getElementById('search-btn2');
+    const searchBtnField = searchBtn.value;
     loadPhones(searchBtnField);
     searchBtn.value = '';
 }
